@@ -1,17 +1,26 @@
 from fastapi import APIRouter
 
+from app.schemas.pricing import PricingRequest, PricingResponse
+from app.services.pricing import PricingService
+
 router = APIRouter(
-    prefix="/v1/pricing",
+    prefix="/pricing",
     tags=["Pricing"],
 )
 
+pricing_service = PricingService()
 
-@router.post("/")
-async def pricing():
+
+@router.post(
+    "/calculate",
+    response_model=PricingResponse,
+    status_code=200,
+)
+def calculate_price(
+    request: PricingRequest,
+) -> PricingResponse:
     """
-    Temporary endpoint to verify routing.
+    Calculate the final selling price for a product.
     """
 
-    return {
-        "message": "Pricing endpoint is working."
-    }
+    return pricing_service.calculate_price(request)
