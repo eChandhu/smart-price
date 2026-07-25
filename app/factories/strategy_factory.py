@@ -4,6 +4,7 @@ from app.schemas.pricing import PricingStrategy
 from app.strategies.base import PricingStrategy as BasePricingStrategy
 from app.strategies.clearance import ClearancePricingStrategy
 from app.strategies.surge import SurgePricingStrategy
+from app.exceptions.pricing import InvalidPricingStrategyError
 
 
 class StrategyFactory:
@@ -24,8 +25,6 @@ class StrategyFactory:
         strategy_cls = cls._STRATEGIES.get(strategy)
 
         if strategy_cls is None:
-            raise ValueError(
-                f"Unsupported pricing strategy: {strategy}"
-            )
+            raise InvalidPricingStrategyError(strategy.value)
 
         return strategy_cls()
