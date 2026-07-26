@@ -12,7 +12,7 @@ class ProductRepository(ABC):
     """
 
     @abstractmethod
-    def get_by_id(self, product_id: int) -> Product:
+    def get_by_id(self, product_id: str) -> Product:
         """
         Retrieve a product by its unique identifier.
 

@@ -1,7 +1,11 @@
 from fastapi import APIRouter, Depends
 
+from sqlalchemy.orm import Session
+from app.database.session import get_db
+
 from app.repositories.base import ProductRepository
-from app.repositories.mock import MockProductRepository
+from app.repositories.postgres import PostgresProductRepository
+
 from app.schemas.pricing import PricingRequest, PricingResponse
 from app.services.pricing import PricingService
 
@@ -11,15 +15,17 @@ router = APIRouter(
 )
 
 
-def get_product_repository() -> ProductRepository:
+def get_product_repository(
+    db: Session = Depends(get_db),
+) -> ProductRepository:
     """
-    Return the application's product repository.
+    Return the PostgreSQL-backed product repository.
 
-    Currently uses an in-memory mock repository.
-    This can later be replaced with a PostgreSQL implementation
-    without changing the service or router.
+    The router depends only on the ProductRepository interface,
+    allowing the implementation to be swapped without affecting
+    the service or API layer.
     """
-    return MockProductRepository()
+    return PostgresProductRepository(db)
 
 
 def get_pricing_service(

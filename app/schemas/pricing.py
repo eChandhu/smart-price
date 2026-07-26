@@ -16,28 +16,6 @@ class PricingRequest(BaseModel):
         examples=["SKU-12345"],
     )
 
-    base_price: Decimal = Field(
-        ...,
-        gt=0,
-        description="Original selling price of the product",
-        examples=[999.99],
-    )
-
-    inventory: int = Field(
-        ...,
-        ge=0,
-        description="Current inventory level",
-        examples=[120],
-    )
-
-    demand_score: float = Field(
-        ...,
-        ge=0,
-        le=1,
-        description="Normalized demand score between 0 and 1",
-        examples=[0.82],
-    )
-
     strategy: PricingStrategy = Field(
         ...,
         description="Pricing strategy to apply",

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from decimal import Decimal
 
-from app.schemas.pricing import PricingRequest
+from app.models.product import Product
 
 
 class PricingStrategy(ABC):
@@ -12,7 +12,7 @@ class PricingStrategy(ABC):
     @abstractmethod
     def calculate_price(
         self,
-        request: PricingRequest,
+        product: Product,
     ) -> Decimal:
         """
         Calculate the final price.
