@@ -18,6 +18,10 @@ class Settings(BaseSettings):
 
     database_url: str
 
+    REDIS_HOST: str
+    REDIS_PORT: int
+    REDIS_DB: int = 0
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
